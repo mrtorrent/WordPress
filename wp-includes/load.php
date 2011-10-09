@@ -39,8 +39,6 @@ function wp_unregister_GLOBALS() {
  * @since 3.0.0
  */
 function wp_fix_server_vars() {
-	global $PHP_SELF;
-
 	$default_server_values = array(
 		'SERVER_SOFTWARE' => '',
 		'REQUEST_URI' => '',
@@ -87,9 +85,8 @@ function wp_fix_server_vars() {
 		unset( $_SERVER['PATH_INFO'] );
 
 	// Fix empty PHP_SELF
-	$PHP_SELF = $_SERVER['PHP_SELF'];
-	if ( empty( $PHP_SELF ) )
-		$_SERVER['PHP_SELF'] = $PHP_SELF = preg_replace( '/(\?.*)?$/', '', $_SERVER["REQUEST_URI"] );
+	if ( empty( $_SERVER['PHP_SELF'] ) )
+		$_SERVER['PHP_SELF'] = preg_replace( '/(\?.*)?$/', '', $_SERVER["REQUEST_URI"] );
 }
 
 /**
